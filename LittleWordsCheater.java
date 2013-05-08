@@ -5,6 +5,8 @@
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+
 public class LittleWordsCheater
 {
 	// Dictionary of words
@@ -39,6 +41,7 @@ public class LittleWordsCheater
 				for (String y : temp)
 				{
 					words.add(x+y);
+					words.add(y);
 				}
 
 			}
@@ -75,13 +78,24 @@ public class LittleWordsCheater
 	 */
 	public void loadDict(String filename)
 	{
-		Scanner dictFile = new Scanner(filename);
-		while (dictFile.hasNext())
+		try
 		{
-			dict.add(dictFile.next());
+			Scanner dictFile = new Scanner(new File(filename));
+			while (dictFile.hasNext())
+			{
+				dict.add(dictFile.next());
+			}
+		}
+		catch (java.io.FileNotFoundException e)
+		{
+			System.err.println("File not found");
 		}
 	}
 	
+	/**
+	 * Adds all stubs to the stub ArrayList
+	 * @param args command line arguments (first is the list)
+	 */
 	public void loadStubs(String [] args)
 	{
 		for (int i = 1; i < args.length; i++)
@@ -108,14 +122,14 @@ public class LittleWordsCheater
 		cheat.loadStubs(args);
 
 		System.out.println("Listing Words");
-		ArrayList<String> permutations = cheat.getPermutations(cheat.getStubs());
-		System.out.println(permutations);
-		//for (String p : permutations)
-		//{
-		//	if (cheat.isWord(p))
-		//	{
-		//		System.out.println(p);
-		//	}
-		//}
+		HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
+		// System.out.println(new HashSet<String>(permutations));
+		for (String p : permutations)
+		{
+			if (cheat.isWord(p))
+			{
+				System.out.println(p);
+			}
+		}
 	}
 }
