@@ -123,7 +123,6 @@ public class LittleWordsCheater
 
 		System.out.println("Listing Words");
 		HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
-		// System.out.println(new HashSet<String>(permutations));
 		for (String p : permutations)
 		{
 			if (cheat.isWord(p))
