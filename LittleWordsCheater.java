@@ -17,8 +17,8 @@ public class LittleWordsCheater
 	 */
 	public LittleWordsCheater()
 	{
-		ArrayList<String> stubs = new ArrayList<String>();
-		ArrayList<String> dict = new ArrayList<String>();
+		stubs = new ArrayList<String>();
+		dict = new HashSet<String>();
 	}
 
 	/**
@@ -33,8 +33,9 @@ public class LittleWordsCheater
 		{
 			for (String x : s)
 			{
-				ArrayList<String> temp = new ArrayList<String>(s);
-				temp.remove(x);
+				ArrayList<String> listWithout = new ArrayList<String>(s);
+				listWithout.remove(x);
+				ArrayList<String> temp = getPermutations(listWithout);
 				for (String y : temp)
 				{
 					words.add(x+y);
@@ -42,9 +43,32 @@ public class LittleWordsCheater
 
 			}
 		}
+		else
+		{
+			words = new ArrayList<String>(s);
+		}
 		return words;
 	}
 
+	/**
+	 * Gets the word stubs
+	 * @return ArrayList of String stubs
+	 */
+	public ArrayList<String> getStubs()
+	{
+		return stubs;
+	}
+
+	/**
+	 * Verifies if a particular word is in the dictionary
+	 * @param str String possibility
+	 * @return boolean true if string is in the dictionary
+	 */
+	public boolean isWord(String str)
+	{
+		return dict.contains(str);
+	}
+	
 	/**
 	 * Loads the dictionary from a specific file
 	 * @param filename the file from which to load
@@ -58,6 +82,13 @@ public class LittleWordsCheater
 		}
 	}
 	
+	public void loadStubs(String [] args)
+	{
+		for (int i = 1; i < args.length; i++)
+		{
+			stubs.add(args[i]);
+		}
+	}
 
 	/**
 	 * Main Method
@@ -74,11 +105,17 @@ public class LittleWordsCheater
 		}
 
 		cheat.loadDict(args[0]);
+		cheat.loadStubs(args);
 
-		ArrayList<String> test = new ArrayList<String>();
-		test.add("th");
-		test.add("st");
-		test.add("er");
-		System.out.println(cheat.getPermutations(test));
+		System.out.println("Listing Words");
+		ArrayList<String> permutations = cheat.getPermutations(cheat.getStubs());
+		System.out.println(permutations);
+		//for (String p : permutations)
+		//{
+		//	if (cheat.isWord(p))
+		//	{
+		//		System.out.println(p);
+		//	}
+		//}
 	}
 }
