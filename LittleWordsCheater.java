@@ -13,6 +13,9 @@ public class LittleWordsCheater
 	private HashSet<String> dict;
 	// List of stubs
 	private ArrayList<String> stubs;
+
+	//Max word size
+	public static int MAXSIZE = 7;
 	
 	/**
 	 * Constructs a Cheater
@@ -51,6 +54,50 @@ public class LittleWordsCheater
 			words = new ArrayList<String>(s);
 		}
 		return words;
+	}
+
+	public void addWordIfWord( HashSet<String> words, String word ) {
+		if( isWord( word ) ) {
+			words.add(word);
+		}
+	}
+
+	public void printWordForMacro( String word ) {
+		for (char c : word.toCharArray())
+		{
+			System.out.println("KeyStrPress " + c);
+			System.out.println("KeyStrRelease " + c);
+			try {
+			Thread.sleep(10);
+			} catch( Exception e ) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("KeyStrPress Return");
+		System.out.println("KeyStrRelease Return");
+	}
+
+	public void printWordIfWord( String word ) {
+		if( isWord( word ) ) {
+			printWordForMacro( word );
+		}
+	}
+
+	public HashSet<String> getPermutationsMike( String s, ArrayList<String> stubs ) {
+		HashSet<String> new_set = new HashSet<String>();
+		if( stubs.size() > 0 && s.length() <= MAXSIZE ) {
+			
+			for( String current_stub : stubs ) {
+				ArrayList<String> current_stubs = new ArrayList<String>( stubs ); // Make a copy
+				current_stubs.remove( current_stub ); // Remove the current one
+				
+				printWordIfWord( s + current_stub );
+
+				HashSet<String> ret = getPermutationsMike( s + current_stub, current_stubs );
+				new_set.addAll( ret );
+			}
+		}
+		return new_set;
 	}
 
 	/**
@@ -123,23 +170,24 @@ public class LittleWordsCheater
 		// Load the stubs into an ArrayList
 		cheat.loadStubs(args);
 
-		HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
+		//HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
+		HashSet<String> permutations = cheat.getPermutationsMike("", cheat.getStubs());
 		
 		for (String p : permutations)
 		{
 			if (cheat.isWord(p))
 			{
 				// Print all permutations of the stubs that are contained in the dictionary 
-				// System.out.println(p);
+				//System.out.println(p);
 
 				// Macro out
-				for (char c : p.toCharArray())
-				{
-					System.out.println("KeyStrPress " + c);
-					System.out.println("KeyStrRelease " + c);
-				}
-				System.out.println("KeyStrPress Return");
-				System.out.println("KeyStrRelease Return");
+//				for (char c : p.toCharArray())
+//				{
+//					System.out.println("KeyStrPress " + c);
+//					System.out.println("KeyStrRelease " + c);
+//				}
+//				System.out.println("KeyStrPress Return");
+//				System.out.println("KeyStrRelease Return");
 			}
 		}
 	}
