@@ -107,6 +107,7 @@ public class LittleWordsCheater
 	/**
 	 * Main Method
 	 * Usage: java LittleWordsCheater dictionary.txt cd {sd re tr ...}
+	 * @param args {input-file} FirstStub {SecondStub ThirdStub ...}
 	 */
 	public static void main(String[] args)
 	{
@@ -117,8 +118,9 @@ public class LittleWordsCheater
 			System.out.println("Usage: java LittleWordsCheater dictionary.txt cd {sd re tr ...}");
 			System.exit(1);
 		}
-
+		// Load the dictionary file into a HashSet
 		cheat.loadDict(args[0]);
+		// Load the stubs into an ArrayList
 		cheat.loadStubs(args);
 
 		System.out.println("Listing Words");
@@ -127,6 +129,7 @@ public class LittleWordsCheater
 		{
 			if (cheat.isWord(p))
 			{
+				// Print all permutations of the stubs that are contained in the dictionary 
 				System.out.println(p);
 			}
 		}
