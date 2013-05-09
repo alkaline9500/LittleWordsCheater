@@ -123,7 +123,6 @@ public class LittleWordsCheater
 		// Load the stubs into an ArrayList
 		cheat.loadStubs(args);
 
-		System.out.println("Listing Words");
 		HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
 		
 		for (String p : permutations)
