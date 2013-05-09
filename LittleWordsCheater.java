@@ -83,7 +83,7 @@ public class LittleWordsCheater
 			Scanner dictFile = new Scanner(new File(filename));
 			while (dictFile.hasNext())
 			{
-				dict.add(dictFile.next());
+				dict.add(dictFile.next().toLowerCase());
 			}
 		}
 		catch (java.io.FileNotFoundException e)
