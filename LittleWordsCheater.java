@@ -125,12 +125,22 @@ public class LittleWordsCheater
 
 		System.out.println("Listing Words");
 		HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
+		
 		for (String p : permutations)
 		{
 			if (cheat.isWord(p))
 			{
 				// Print all permutations of the stubs that are contained in the dictionary 
-				System.out.println(p);
+				// System.out.println(p);
+
+				// Macro out
+				for (char c : p.toCharArray())
+				{
+					System.out.println("KeyStrPress " + c);
+					System.out.println("KeyStrRelease " + c);
+				}
+				System.out.println("KeyStrPress Return");
+				System.out.println("KeyStrRelease Return");
 			}
 		}
 	}
