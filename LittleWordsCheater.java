@@ -88,13 +88,13 @@ public class LittleWordsCheater
 		System.out.println("KeyStrPress Return");
 		System.out.println("KeyStrRelease Return");
 		// Clear out the word list if the word is large
-		if (word.length() >= MAXSIZE-1)
-		{
-			for (int i = 0; i < MAXSIZE; i++)
+//		if (word.length() >= MAXSIZE-1)
+//		{
+			for (int i = 0; i < word.length(); i++)
 			{
 				System.out.println("KeyStrPress BackSpace\nKeyStrRelease BackSpace");
 			}
-		}
+//		}
 			
 	}
 
