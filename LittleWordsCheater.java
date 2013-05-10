@@ -19,6 +19,8 @@ public class LittleWordsCheater
 	private boolean macromode;
 	// Max word size
 	public static int MAXSIZE;
+    // Running list of words tried to prevent duplicates
+    public HashSet<String> validWords;
 
 	/**
 	 * Constructs a LittleWordsCheater
@@ -28,6 +30,7 @@ public class LittleWordsCheater
 	{
 		stubs = new ArrayList<String>();
 		dict = new HashSet<String>();
+		validWords = new HashSet<String>();
 		MAXSIZE = 10;
 		macromode = false;
 	}
@@ -105,8 +108,10 @@ public class LittleWordsCheater
 	 */
 	public void printWordIfWord(String word)
 	{
-		if (isWord(word))
+        // Only print if the string is a word and if it has not yet been added
+		if (isWord(word) && !validWords.contains(word))
 		{
+            validWords.add(word);
 			if (macromode)
 			{
 				printWordForMacro( word );
