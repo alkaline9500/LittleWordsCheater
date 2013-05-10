@@ -18,9 +18,10 @@ public class LittleWordsCheater
 	private boolean macromode;
 	// Max word size
 	public static int MAXSIZE;
-	
+
 	/**
-	 * Constructs a Cheater
+	 * Constructs a LittleWordsCheater
+	 * Set default maxsize and macro
 	 */
 	public LittleWordsCheater()
 	{
@@ -126,15 +127,18 @@ public class LittleWordsCheater
 		HashSet<String> new_set = new HashSet<String>();
 		if (stubs.size() > 0 && s.length() < MAXSIZE)
 		{
-			
+			// For each stub
 			for(String current_stub : stubs)
 			{
-				ArrayList<String> current_stubs = new ArrayList<String>(stubs); // Make a copy
-				current_stubs.remove(current_stub); // Remove the current one
-				
+				// Make a copy
+				ArrayList<String> current_stubs = new ArrayList<String>(stubs);
+				// Remove the current one
+				current_stubs.remove(current_stub);
+				// If the current permutation plus the stub is a word, add it
 				printWordIfWord(s + current_stub);
-
+				// Recurse with the new string plus the stub, and the stubs list without the current stub
 				HashSet<String> ret = getPermutationsMike(s + current_stub, current_stubs);
+				// Add all to the set
 				new_set.addAll(ret);
 			}
 		}
