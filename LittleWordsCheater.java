@@ -6,6 +6,7 @@
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Collections;
 import java.io.File;
 
 public class LittleWordsCheater
@@ -59,64 +60,6 @@ public class LittleWordsCheater
 			words = new ArrayList<String>(s);
 		}
 		return words;
-	}
-	
-	/**
-	 * Get the Scrabble score for a string
-	 * @param word word to get score
-	 * @return score
-	 */
-	public int getScore(String word)
-	{
-		int sum = 0;
-		for (Char c : word.toCharArray())
-		{
-			switch (c)
-			{
-				case 'e':
-				case 'a':
-				case 'i':
-				case 'o':
-				case 'n':
-				case 'r':
-				case 't':
-				case 'l':
-				case 's':
-				case 'u':
-					sum += 1;
-					break;
-				case 'd':
-				case 'g':
-					sum += 2;
-					break;
-				case 'b':
-				case 'c':
-				case 'm':
-				case 'p':
-					sum += 3;
-					break;
-				case 'f':
-				case 'h':
-				case 'v':
-				case 'w':
-				case 'y':
-					sum += 4;
-					break;
-				case 'k':
-					sum += 5;
-					break;
-				case 'j':
-				case 'x':
-					sum += 8;
-					break;
-				case 'q':
-				case 'z':
-					sum += 10;
-					break;
-			}
-		}
-		return sum;
-		
 	}
 
 	/**
@@ -266,7 +209,9 @@ public class LittleWordsCheater
 				break;
 			}
 		}
-		
+
+        // Sort stubs by score to get highest scoring words
+		Collections.sort(stubs, new ScrabbleComparator());
 		//System.out.println("Enter max word size:");
 		//System.out.println("Macro Mode?:");
 		s = input.next();
