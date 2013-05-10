@@ -62,6 +62,64 @@ public class LittleWordsCheater
 	}
 	
 	/**
+	 * Get the Scrabble score for a string
+	 * @param word word to get score
+	 * @return score
+	 */
+	public int getScore(String word)
+	{
+		int sum = 0;
+		for (Char c : word.toCharArray())
+		{
+			switch (c)
+			{
+				case 'e':
+				case 'a':
+				case 'i':
+				case 'o':
+				case 'n':
+				case 'r':
+				case 't':
+				case 'l':
+				case 's':
+				case 'u':
+					sum += 1;
+					break;
+				case 'd':
+				case 'g':
+					sum += 2;
+					break;
+				case 'b':
+				case 'c':
+				case 'm':
+				case 'p':
+					sum += 3;
+					break;
+				case 'f':
+				case 'h':
+				case 'v':
+				case 'w':
+				case 'y':
+					sum += 4;
+					break;
+				case 'k':
+					sum += 5;
+					break;
+				case 'j':
+				case 'x':
+					sum += 8;
+					break;
+				case 'q':
+				case 'z':
+					sum += 10;
+					break;
+			}
+		}
+		return sum;
+		
+	}
+
+	/**
 	 * Adds the word to the hash if it is a word
 	 * @param words HashSet of words
 	 * @param word possible word string
@@ -88,13 +146,13 @@ public class LittleWordsCheater
 		System.out.println("KeyStrPress Return");
 		System.out.println("KeyStrRelease Return");
 		// Clear out the word list if the word is large
-		if (word.length() >= MAXSIZE-1)
-		{
-			for (int i = 0; i < MAXSIZE; i++)
+//		if (word.length() >= MAXSIZE-1)
+//		{
+			for (int i = 0; i < word.length(); i++)
 			{
 				System.out.println("KeyStrPress BackSpace\nKeyStrRelease BackSpace");
 			}
-		}
+//		}
 			
 	}
 
