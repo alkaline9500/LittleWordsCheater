@@ -31,17 +31,21 @@ public class BoggleCheater
 		dict = new HashSet<String>();
 	}
 
-	public void setBoard( String[][] board ) {
+	public void setBoard( String[][] board )
+	{
 		this.board = board;
 	}
 
-	public void addWordIfWord( HashSet<String> words, String word ) {
-		if( isWord( word ) ) {
+	public void addWordIfWord( HashSet<String> words, String word )
+	{
+		if(isWord(word))
+		{
 			words.add(word);
 		}
 	}
 
-	public void printWordForMacro( String word ) {
+	public void printWordForMacro(String word)
+	{
 		for (char c : word.toCharArray())
 		{
 			System.out.println("KeyStrPress " + c);
@@ -56,9 +60,15 @@ public class BoggleCheater
 		System.out.println("KeyStrRelease Return");
 	}
 
-	public void printWordIfWord( String word ) {
-		if( isWord( word ) ) {
-			printWordForMacro( word );
+	/**
+	 * Prints if the given word is in the dictionary
+	 * @param word String to check
+	 */
+	public void printWordIfWord( String word )
+	{
+		if(isWord(word))
+		{
+			printWordForMacro(word);
 		}
 	}
 

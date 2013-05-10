@@ -1,6 +1,7 @@
 /**
  * LittleWordsCheater Class and main
  * @author Nic Manoogian
+ * @author Mike Lyons
  */
 import java.util.HashSet;
 import java.util.ArrayList;
@@ -13,9 +14,10 @@ public class LittleWordsCheater
 	private HashSet<String> dict;
 	// List of stubs
 	private ArrayList<String> stubs;
-
-	//Max word size
-	public static int MAXSIZE = 7;
+	// If the output should be macro
+	private boolean macromode;
+	// Max word size
+	public static int MAXSIZE;
 	
 	/**
 	 * Constructs a Cheater
@@ -24,6 +26,8 @@ public class LittleWordsCheater
 	{
 		stubs = new ArrayList<String>();
 		dict = new HashSet<String>();
+		MAXSIZE = 10;
+		macromode = false;
 	}
 
 	/**
@@ -55,46 +59,74 @@ public class LittleWordsCheater
 		}
 		return words;
 	}
-
-	public void addWordIfWord( HashSet<String> words, String word ) {
-		if( isWord( word ) ) {
+	
+	/**
+	 * Adds the word to the hash if it is a word
+	 * @param words HashSet of words
+	 * @param word possible word string
+	 */
+	public void addWordIfWord(HashSet<String> words, String word)
+	{
+		if(isWord(word))
+		{
 			words.add(word);
 		}
 	}
 
-	public void printWordForMacro( String word ) {
+	/**
+	 * Prints the xmacro commands for the word
+	 * @param word possbile word string
+	 */
+	public void printWordForMacro(String word)
+	{
 		for (char c : word.toCharArray())
 		{
 			System.out.println("KeyStrPress " + c);
 			System.out.println("KeyStrRelease " + c);
-			try {
-			Thread.sleep(10);
-			} catch( Exception e ) {
-				e.printStackTrace();
-			}
 		}
 		System.out.println("KeyStrPress Return");
 		System.out.println("KeyStrRelease Return");
 	}
 
-	public void printWordIfWord( String word ) {
-		if( isWord( word ) ) {
-			printWordForMacro( word );
+	/**
+	 * Prints the word if it is in the HashSet
+	 * @param word possbile word string
+	 */
+	public void printWordIfWord(String word)
+	{
+		if (isWord(word))
+		{
+			if (macromode)
+			{
+				printWordForMacro( word );
+			}
+			else
+			{
+				System.out.println(word);
+			}
 		}
 	}
 
-	public HashSet<String> getPermutationsMike( String s, ArrayList<String> stubs ) {
+	/**
+	 * Gets complete permutations for a stub list
+	 * @param s Current permutation
+	 * @param stubs String stubs to permute
+	 */
+	public HashSet<String> getPermutationsMike( String s, ArrayList<String> stubs )
+	{
 		HashSet<String> new_set = new HashSet<String>();
-		if( stubs.size() > 0 && s.length() <= MAXSIZE ) {
+		if (stubs.size() > 0 && s.length() < MAXSIZE)
+		{
 			
-			for( String current_stub : stubs ) {
-				ArrayList<String> current_stubs = new ArrayList<String>( stubs ); // Make a copy
-				current_stubs.remove( current_stub ); // Remove the current one
+			for(String current_stub : stubs)
+			{
+				ArrayList<String> current_stubs = new ArrayList<String>(stubs); // Make a copy
+				current_stubs.remove(current_stub); // Remove the current one
 				
-				printWordIfWord( s + current_stub );
+				printWordIfWord(s + current_stub);
 
-				HashSet<String> ret = getPermutationsMike( s + current_stub, current_stubs );
-				new_set.addAll( ret );
+				HashSet<String> ret = getPermutationsMike(s + current_stub, current_stubs);
+				new_set.addAll(ret);
 			}
 		}
 		return new_set;
@@ -140,55 +172,59 @@ public class LittleWordsCheater
 	}
 	
 	/**
+	 * Gets various things from the user
 	 * Adds all stubs to the stub ArrayList
-	 * @param args command line arguments (first is the list)
+	 * Sets maxsize
+	 * Sets macro or regular
 	 */
-	public void loadStubs(String [] args)
+	public void getInput()
 	{
-		for (int i = 1; i < args.length; i++)
+		//System.out.println("Enter word stubs (end with 0):");
+		Scanner input = new Scanner(System.in);
+		String s = "";
+		while (input.hasNext())
 		{
-			stubs.add(args[i]);
+			s = input.next();
+			if (Character.isLetter(s.charAt(0)))
+			{
+				stubs.add(s);
+			}
+			else
+			{
+				MAXSIZE = Integer.parseInt(s);
+				break;
+			}
+		}
+		
+		//System.out.println("Enter max word size:");
+		//System.out.println("Macro Mode?:");
+		s = input.next();
+		if (s.equals("y") || s.equals("Y"))
+		{
+			macromode = true;
+			System.out.println("Delay 3");
 		}
 	}
 
 	/**
 	 * Main Method
-	 * Usage: java LittleWordsCheater dictionary.txt cd {sd re tr ...}
-	 * @param args {input-file} FirstStub {SecondStub ThirdStub ...}
+	 * Usage: java LittleWordsCheater dictionary.txt
+	 * @param args dictionary
 	 */
 	public static void main(String[] args)
 	{
 		LittleWordsCheater cheat = new LittleWordsCheater();
 		// Must be at least dict and stubs
-		if (args.length < 2)
+		if (args.length != 1)
 		{
-			System.out.println("Usage: java LittleWordsCheater dictionary.txt cd {sd re tr ...}");
+			System.out.println("Usage: java LittleWordsCheater dictionary.txt");
 			System.exit(1);
 		}
 		// Load the dictionary file into a HashSet
 		cheat.loadDict(args[0]);
-		// Load the stubs into an ArrayList
-		cheat.loadStubs(args);
+		cheat.getInput();
 
 		//HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
 		HashSet<String> permutations = cheat.getPermutationsMike("", cheat.getStubs());
-		
-		for (String p : permutations)
-		{
-			if (cheat.isWord(p))
-			{
-				// Print all permutations of the stubs that are contained in the dictionary 
-				//System.out.println(p);
-
-				// Macro out
-//				for (char c : p.toCharArray())
-//				{
-//					System.out.println("KeyStrPress " + c);
-//					System.out.println("KeyStrRelease " + c);
-//				}
-//				System.out.println("KeyStrPress Return");
-//				System.out.println("KeyStrRelease Return");
-			}
-		}
 	}
 }

@@ -7,5 +7,5 @@ I suggest you go to a game like [Word Ruffle](http://www.wordgames.com/word-ruff
 Then do something like this:
 
 ``
-java LittleWordsCheater list.ls a u e d t w s | xmacroplay $DISPLAY
+java LittleWordsCheater list.ls | xmacroplay $DISPLAY
 ``
