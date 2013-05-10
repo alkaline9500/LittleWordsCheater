@@ -9,3 +9,8 @@ Then do something like this:
 ``
 java LittleWordsCheater list.ls | xmacroplay $DISPLAY
 ``
+
+After running, the program takes input:
+1. Enter the list of stubs on separate lines
+2. On the next line, enter the max size for the word
+3. On the last line, enter y or n for macro mode
