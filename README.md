@@ -15,4 +15,4 @@ After running, the program takes input:
 	<li>Enter the list of stubs on separate lines</li>
 	<li>On the next line, enter the max size for the word</li>
 	<li>On the last line, enter y or n for macro mode</li>
-</ol?
+</ol>
