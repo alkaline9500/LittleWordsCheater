@@ -1,5 +1,6 @@
 /**
  * LittleWordsCheater Class and main
+ * Uses string stubs and a dictionary to generate possible words
  * @author Nic Manoogian
  * @author Mike Lyons
  */
@@ -24,19 +25,23 @@ public class LittleWordsCheater
 
 	/**
 	 * Constructs a LittleWordsCheater
-	 * Set default maxsize and macro
+	 * Set default maxsize and macro variable
 	 */
 	public LittleWordsCheater()
-	{
+    {
+        // Initialize ArrayLists
 		stubs = new ArrayList<String>();
 		dict = new HashSet<String>();
 		validWords = new HashSet<String>();
+        // Initial MAXSIZE is 10
 		MAXSIZE = 10;
+        // Normal mode is macro off
 		macromode = false;
 	}
 
 	/**
 	 * Gets all possible permutations from the given stubs
+     * (Old permutation generation)
 	 * @param s ArrayList of String stubs
 	 * @return a ArrayList of all permutations
 	 */
@@ -92,19 +97,16 @@ public class LittleWordsCheater
 		System.out.println("KeyStrPress Return");
 		System.out.println("KeyStrRelease Return");
 		// Clear out the word list if the word is large
-//		if (word.length() >= MAXSIZE-1)
-//		{
-			for (int i = 0; i < word.length(); i++)
-			{
-				System.out.println("KeyStrPress BackSpace\nKeyStrRelease BackSpace");
-			}
-//		}
-			
+		// if (word.length() >= MAXSIZE-1)
+        for (int i = 0; i < word.length(); i++)
+        {
+            System.out.println("KeyStrPress BackSpace\nKeyStrRelease BackSpace");
+        }
 	}
 
 	/**
 	 * Prints the word if it is in the HashSet
-	 * @param word possbile word string
+	 * @param word possible word string
 	 */
 	public void printWordIfWord(String word)
 	{
@@ -138,7 +140,7 @@ public class LittleWordsCheater
 			{
 				// Make a copy
 				ArrayList<String> current_stubs = new ArrayList<String>(stubs);
-				// Remove the current one
+				// Remove the current stub from the list
 				current_stubs.remove(current_stub);
 				// If the current permutation plus the stub is a word, add it
 				printWordIfWord(s + current_stub);
@@ -230,6 +232,7 @@ public class LittleWordsCheater
 	/**
 	 * Main Method
 	 * Usage: java LittleWordsCheater dictionary.txt
+     * System input: Enter all stubs on separate lines, enter max size, enter (y/n) for macro mode
 	 * @param args dictionary
 	 */
 	public static void main(String[] args)
@@ -245,7 +248,7 @@ public class LittleWordsCheater
 		cheat.loadDict(args[0]);
 		cheat.getInput();
 
-		//HashSet<String> permutations = new HashSet<String>(cheat.getPermutations(cheat.getStubs()));
-		HashSet<String> permutations = cheat.getPermutationsMike("", cheat.getStubs());
+		// Get the permutations
+        HashSet<String> permutations = cheat.getPermutationsMike("", cheat.getStubs());
 	}
 }
